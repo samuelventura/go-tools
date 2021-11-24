@@ -11,8 +11,8 @@ type argsDso struct {
 
 type Args interface {
 	Clone() Args
-	Set(name string, value interface{})
-	Get(name string) interface{}
+	SetValue(name string, value interface{})
+	GetValue(name string) interface{}
 }
 
 func NewArgs() Args {
@@ -30,15 +30,15 @@ func (dso *argsDso) Clone() Args {
 	return ndso
 }
 
-func (dso *argsDso) Get(name string) interface{} {
+func (dso *argsDso) GetValue(name string) interface{} {
 	value, ok := dso.values[name]
 	if !ok {
-		err := fmt.Errorf("args value not found %s", name)
+		err := fmt.Errorf("value not found %s", name)
 		log.Panic(err)
 	}
 	return value
 }
 
-func (dso *argsDso) Set(name string, value interface{}) {
+func (dso *argsDso) SetValue(name string, value interface{}) {
 	dso.values[name] = value
 }
