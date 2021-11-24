@@ -14,10 +14,11 @@ type logWriter struct {
 func (w logWriter) Write(bytes []byte) (int, error) {
 	ts := time.Now().Format("20060102T150405.000")
 	line := fmt.Sprintf("%s %d %s", ts, w.pid, string(bytes))
-	return fmt.Print(line)
+	return fmt.Fprint(os.Stderr, line)
 }
 
 func SetupLog() {
+	os.Setenv("GOTRACEBACK", "all")
 	w := &logWriter{}
 	w.pid = os.Getpid()
 	log.SetFlags(0)

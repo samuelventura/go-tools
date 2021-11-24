@@ -5,24 +5,29 @@ import (
 	"log"
 )
 
-type argsDso struct {
+type argmDso struct {
 	values map[string]interface{}
 }
 
 type Args interface {
-	Clone() Args
 	SetValue(name string, value interface{})
 	GetValue(name string) interface{}
 }
 
-func NewArgs() Args {
-	dso := &argsDso{}
+type Argm interface {
+	Clone() Argm
+	SetValue(name string, value interface{})
+	GetValue(name string) interface{}
+}
+
+func NewArgm() Argm {
+	dso := &argmDso{}
 	dso.values = make(map[string]interface{})
 	return dso
 }
 
-func (dso *argsDso) Clone() Args {
-	ndso := &argsDso{}
+func (dso *argmDso) Clone() Argm {
+	ndso := &argmDso{}
 	ndso.values = make(map[string]interface{})
 	for k, v := range dso.values {
 		ndso.values[k] = v
@@ -30,7 +35,7 @@ func (dso *argsDso) Clone() Args {
 	return ndso
 }
 
-func (dso *argsDso) GetValue(name string) interface{} {
+func (dso *argmDso) GetValue(name string) interface{} {
 	value, ok := dso.values[name]
 	if !ok {
 		err := fmt.Errorf("value not found %s", name)
@@ -39,6 +44,6 @@ func (dso *argsDso) GetValue(name string) interface{} {
 	return value
 }
 
-func (dso *argsDso) SetValue(name string, value interface{}) {
+func (dso *argmDso) SetValue(name string, value interface{}) {
 	dso.values[name] = value
 }
